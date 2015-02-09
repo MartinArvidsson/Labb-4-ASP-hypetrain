@@ -17,9 +17,9 @@ namespace Gissa_hemliga_talet.Model
     }
     public class SecretNumber
     {
-        private const int MaxNumberOfGuesses = 6; // Antal gissningar
+        private const int MaxNumberOfGuesses = 7; // Antal gissningar
         private int _number; //Vad som ska bli ett randomtal
-        List<int>  _previousGuesses = new List<int>(MaxNumberOfGuesses); // Listan där gissnignarna ska sparas, storleken är maxgisnningar
+        List<int>  _previousGuesses = new List<int>(MaxNumberOfGuesses - 1); // Listan där gissnignarna ska sparas, storleken är maxgisnningar
         public SecretNumber()
         {
             Initialize(); // Startar initialize när klassen körs
@@ -29,7 +29,8 @@ namespace Gissa_hemliga_talet.Model
             _previousGuesses.Clear(); //  Tömmer listan med tidigare gissningar
             Random random = new Random();// Ger _number ett randomtal
             _number = random.Next(1, 101);// Ger _number ett randomtal
-            Outcome = Outcome.Indefinite; 
+            Outcome = Outcome.Indefinite;
+
         }
         public Outcome Outcome 
         {
@@ -50,25 +51,21 @@ namespace Gissa_hemliga_talet.Model
                 {
                     return true;
                 }
-                else
-                {
+  
                     return false;
-                }
+                
             }
         }
         public int? Number
         {
             get
             {
-                if (CanMakeGuess == true)
+                if (CanMakeGuess)
                 {
                     return null;
                 }
-                else
-                {
-                    return _number;
-                }
-                
+                return _number;
+            
             }
         }       
         public  IReadOnlyList<int> PreviousGuesses
@@ -88,10 +85,12 @@ namespace Gissa_hemliga_talet.Model
             else if (CanMakeGuess == false)
             {
                 Outcome = Outcome.NoMoreGuesses;
+                return Outcome;
             }
             else if (_previousGuesses.Contains(guess))
             {
                 Outcome = Outcome.PreviousGuess;
+                return Outcome;
             }
             else if(guess == _number)
             {

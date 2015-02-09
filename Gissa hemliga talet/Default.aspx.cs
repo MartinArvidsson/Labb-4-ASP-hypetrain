@@ -40,8 +40,8 @@ namespace Gissa_hemliga_talet
                     PresentationArea.Text = "Du gissade för högt!";
                 }
                 if (SecretNumber.Outcome == Outcome.NoMoreGuesses)
-                {
-                    PresentationArea.Text = string.Format("Du har slut på gissningar :( svaret var {0}",SecretNumber.Number);
+                {                   
+                    PresentationArea.Text = string.Format("Du har slut på gissningar :( svaret var {0}", SecretNumber.Number);
                     Guessarea.Enabled = false;
                     GuessButton.Visible = false;
                     ResetButton.Visible = true;
